@@ -4,7 +4,9 @@ let select = -1;
 let data = "";
 let markerList = {};
 let counter = 0;
-let route="";
+let route = "";
+let cacheRatelimit = 43200000;
+let gpsRatelimit = 10000;
 
 $("#line").val("");
 $("#refresh").click(loadPoints);
@@ -22,7 +24,7 @@ function loadPoints() {
 				$("#update").html("Last update: "+Date.now());
 				markers.clearMarkers();
 				data["result"].forEach(setPoints);
-			$("#counter").html("Vehicle count: "+counter);
+			$("#counter").html("Bus count: "+counter);
 			},
 			fail: function() {
 				console.log("AJAX machine broke");
@@ -61,8 +63,5 @@ map = new OpenLayers.Map("mapdiv");
 map.addLayer(new OpenLayers.Layer.OSM());
 const markers = new OpenLayers.Layer.Markers( "Markers" );
 map.addLayer(markers);
-    
 loadPoints();
-
 map.setCenter(lonLat(21.017532, 52.237049), 12);
-setInterval(loadPoints, 12000);
