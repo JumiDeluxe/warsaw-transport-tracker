@@ -19,7 +19,7 @@ function lonLat(lon, lat) {
 function loadBusPoints() {
 	bus_counter = 0;
 	$.ajax({
-			url:"/api/busPositions.php",
+			url:"/api/vehiclePositions.php/?vehicle=1",
 			dataType: "json",
 			success: function(result) {
 				data = result;
@@ -64,7 +64,7 @@ function busInfo(bus) {
 function loadTramPoints() {
 	tram_counter = 0;
 	$.ajax({
-			url:"/api/tramPositions.php",
+			url:"/api/vehiclePositions.php/?vehicle=2",
 			dataType: "json",
 			success: function(result) {
 				data = result;
