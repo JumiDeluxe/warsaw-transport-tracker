@@ -14,13 +14,16 @@
 			<input type="text" id="line"><br>
 			<label for="stop">Stop</label><br>
 			<input type="text" id="stop"></br>
+			<label for="stop_number">Stop Number</label><br>
+			<input type="text" id="stop_number"><br>
 			<button type="button" id="refresh">Refresh</button>
 	</div>
-	<div id="counter"></div>
+	<div id="bus_counter"></div>
+	<div id="tram_counter"></div>
 	</div>
 	<div id="mapdiv"></div>
 	<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-	<script type="module" src="/js/main.js"></script>
+	<script src="/js/main.js"></script>
 </body>
 </html>
