@@ -23,7 +23,9 @@ function loadBusPoints() {
 			dataType: "json",
 			success: function(result) {
 				data = result;
-				$("#update").html("Last update: "+Date.now());
+				let now = new Date();
+				now.setDate(now.getDate());
+				$("#update").html("Last update: "+moment(now).format('lll'));
 				busMarkers.clearMarkers();
 				data["result"].forEach(setBusPoints);
 			$("#bus_counter").html("Bus count: "+bus_counter);
@@ -92,7 +94,7 @@ function vehicleInfo(vehicle) {
 	}
 	select = vehicle["VehicleNumber"];
 	markerList[select].setUrl(markerActive);
-	$("#vehicle").html("Line: "+vehicle["Lines"]+"<br>Vehicle:"+vehicle["VehicleNumber"]+"<br>Last heard: "+vehicle["Time"]);
+	$("#vehicle").html("Line: "+vehicle["Lines"]+"<br>Vehicle:"+vehicle["VehicleNumber"]+"<br>Last heard: "+moment(vehicle["Time"]).fromNow());
 }
 
 
