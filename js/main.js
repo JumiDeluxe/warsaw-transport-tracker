@@ -45,20 +45,11 @@ function setBusPoints(item, index) {
 		busMarkers.addMarker(markerList[item.VehicleNumber]);
 		if (select == bus["VehicleNumber"]) {
 			markerList[item.VehicleNumber].setUrl(markerActive);
+			vehicleInfo(bus);
 		}
-		markerList[item.VehicleNumber].events.register('click', markerList[item.VehicleNumber], function(evt) { busInfo(bus); OpenLayers.Event.stop(evt); });
-		markerList[item.VehicleNumber].events.register('touchstart', markerList[item.VehicleNumber], function(evt) { busInfo(bus); OpenLayers.Event.stop(evt); });
+		markerList[item.VehicleNumber].events.register('click', markerList[item.VehicleNumber], function(evt) { vehicleInfo(bus); OpenLayers.Event.stop(evt); });
+		markerList[item.VehicleNumber].events.register('touchstart', markerList[item.VehicleNumber], function(evt) { vehicleInfo(bus); OpenLayers.Event.stop(evt); });
 	}
-}
-function busInfo(bus) {
-	if(select != -1) {
-		markerList[select].setUrl(markerInactive);
-	}
-	select = bus["VehicleNumber"];
-	$.ajax({url:"/api/trips.php?trip="+bus["Lines"], dataType: "json", success: function(result) {
-		markerList[select].setUrl(markerActive);
-		$("#vehicle").html("Line: "+bus["Lines"]+" Vehicle:"+"<br>Last heard: "+bus["Time"]);
-	}});
 }
 //----------------------trams
 function loadTramPoints() {
@@ -89,20 +80,19 @@ function setTramPoints(item, index) {
 		tramMarkers.addMarker(markerList[item.VehicleNumber]);
 		if (select == tram["VehicleNumber"]) {
 			markerList[item.VehicleNumber].setUrl(markerActive);
+			vehicleInfo(bus);
 		}
-		markerList[item.VehicleNumber].events.register('click', markerList[item.VehicleNumber], function(evt) { tramInfo(tram); OpenLayers.Event.stop(evt); });
-		markerList[item.VehicleNumber].events.register('touchstart', markerList[item.VehicleNumber], function(evt) { busInfo(tram); OpenLayers.Event.stop(evt); });
+		markerList[item.VehicleNumber].events.register('click', markerList[item.VehicleNumber], function(evt) { vehicleInfo(tram); OpenLayers.Event.stop(evt); });
+		markerList[item.VehicleNumber].events.register('touchstart', markerList[item.VehicleNumber], function(evt) { vehicleInfo(tram); OpenLayers.Event.stop(evt); });
 	}
 }
-function tramInfo(tram) {
+function vehicleInfo(vehicle) {
 	if(select != -1) {
 		markerList[select].setUrl(markerInactive);
 	}
-	select = tram["VehicleNumber"];
-	$.ajax({url:"/api/trips.php?trip="+tram["Lines"], dataType: "json", success: function(result) {
-		markerList[select].setUrl(markerActive);
-		$("#vehicle").html("Line: "+tram["Lines"]+" Vehicle:"+"<br>Last heard: "+tram["Time"]);
-	}});
+	select = vehicle["VehicleNumber"];
+	markerList[select].setUrl(markerActive);
+	$("#vehicle").html("Line: "+vehicle["Lines"]+"<br>Vehicle:"+vehicle["VehicleNumber"]+"<br>Last heard: "+vehicle["Time"]);
 }
 
 
