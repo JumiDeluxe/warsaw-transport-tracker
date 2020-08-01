@@ -2,17 +2,17 @@
 Real-time public transport tracking in Warsaw, using data provided by [Otwarte dane] (https://api.um.warszawa.pl/).
 
 ### Tram
-- [ ] Tracking trams
-- [ ] Searching trams by line
+- [x] Tracking trams
+- [x] Searching trams by line
 - [ ] Display data
   - [ ] Next stop
-  - [ ] Update time
+  - [x] Update time
 
 ### Bus
-- [ ] Change visibility of inactive buses
+- [x] Change visibility of inactive buses
 - [ ] Display data
   - [ ] Next stop
-  - [ ] Update time
+  - [x] Update time
 
 ### Stops
 - [ ] Add stop marks
@@ -27,7 +27,7 @@ Real-time public transport tracking in Warsaw, using data provided by [Otwarte d
   - [ ] Trams
 - [ ] Different colors for buses, trams, subway
 - [ ] Different shape for vehicles and stops
-- [ ] Inactive vehicles
+- [x] Inactive vehicles
 
 ### Map
 - [ ] Coloring lines on map

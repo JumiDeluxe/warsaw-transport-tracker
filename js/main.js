@@ -1,5 +1,6 @@
-const markerInactive = "/img/marker.jpg";
-const markerActive = "/img/marker_g.jpg";
+const markerInactive = "/img/marker_r.png";
+const markerOffline = "/img/marker_ro.png";
+const markerActive = "/img/marker_g.png";
 let select = -1;
 let data = "";
 let stopData = "";
@@ -11,10 +12,15 @@ let cacheRatelimit = 43200000;
 let gpsRatelimit = 10000;
 
 $("#line").val("");
-$("#refresh").click(loadBusPoints);
+$("#refresh").click(loadBusPoints, loadTramPoints);
 
 function lonLat(lon, lat) {
 	return new OpenLayers.LonLat(lon, lat ).transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+}
+function offlineDetect(heardTime) {
+	let now = moment(new Date());
+	let time = moment(heardTime).add(5, 'm');
+	return now.isAfter(time);
 }
 function loadBusPoints() {
 	bus_counter = 0;
@@ -25,7 +31,7 @@ function loadBusPoints() {
 				data = result;
 				let now = new Date();
 				now.setDate(now.getDate());
-				$("#update").html("Last update: "+moment(now).format('lll'));
+				$("#update").html("Last update: "+moment(now).format('MMMM Do YYYY, h:mm:ss'));
 				busMarkers.clearMarkers();
 				data["result"].forEach(setBusPoints);
 			$("#bus_counter").html("Bus count: "+bus_counter);
@@ -45,6 +51,11 @@ function setBusPoints(item, index) {
 		let bus = data["result"][index];
 		markerList[item.VehicleNumber] = new OpenLayers.Marker(lonLat(item.Lon, item.Lat));
 		busMarkers.addMarker(markerList[item.VehicleNumber]);
+		if(offlineDetect(bus["Time"])) {
+			markerList[item.VehicleNumber].setUrl(markerOffline);
+		} else {
+			markerList[item.VehicleNumber].setUrl(markerInactive);
+		}
 		if (select == bus["VehicleNumber"]) {
 			markerList[item.VehicleNumber].setUrl(markerActive);
 			vehicleInfo(bus);
@@ -80,9 +91,14 @@ function setTramPoints(item, index) {
 		let tram = data["result"][index];
 		markerList[item.VehicleNumber] = new OpenLayers.Marker(lonLat(item.Lon, item.Lat));
 		tramMarkers.addMarker(markerList[item.VehicleNumber]);
+		if(offlineDetect(tram["Time"])) {
+			markerList[item.VehicleNumber].setUrl(markerOffline);
+		} else {
+			markerList[item.VehicleNumber].setUrl(markerInactive);
+		}
 		if (select == tram["VehicleNumber"]) {
 			markerList[item.VehicleNumber].setUrl(markerActive);
-			vehicleInfo(bus);
+			vehicleInfo(tram);
 		}
 		markerList[item.VehicleNumber].events.register('click', markerList[item.VehicleNumber], function(evt) { vehicleInfo(tram); OpenLayers.Event.stop(evt); });
 		markerList[item.VehicleNumber].events.register('touchstart', markerList[item.VehicleNumber], function(evt) { vehicleInfo(tram); OpenLayers.Event.stop(evt); });
