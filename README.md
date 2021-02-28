@@ -1,4 +1,4 @@
-# bus-tracker
+# warsaw-transport-tracker
 
 Tracker of buses and trams in Warsaw that uses Warsaw public API for vehicle GPS data and OpenStreetMap for maps.
 
